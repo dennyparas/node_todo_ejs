@@ -24,7 +24,7 @@ db.on('error', (err) => {
 const app = express()
 
 const indexRoute = require('./routes/index')
-const todoRoute = require('./routes/todo')
+const todosRoute = require('./routes/todos')
 
 // Body Parser
 app.use(bodyParser.json())
@@ -36,7 +36,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.use('/', indexRoute)
-app.use('/todo', todoRoute)
+app.use('/todos', todosRoute)
 
 // Init server
 const port = 3000
