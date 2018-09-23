@@ -22,6 +22,9 @@ db.on('error', (err) => {
 // Init app
 const app = express()
 
+const indexRoute = require('./routes/index')
+const todoRoute = require('./routes/todo')
+
 // Body Parser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -31,9 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
+app.use('/', indexRoute)
+app.use('/todo', todoRoute)
 
 // Init server
 const port = 3000
