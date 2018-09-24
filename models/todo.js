@@ -8,6 +8,18 @@ const todoSchema = mongoose.Schema({
   body: {
     type: String,
     required: true
+  },
+  date_added: {
+    type: Number,
+    default: new Date().getTime()
+  },
+  completed: {
+    type: Boolean,
+    default: false
+  },
+  completed_at: {
+    type: Number,
+    default: null
   }
 })
 
