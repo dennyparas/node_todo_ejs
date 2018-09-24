@@ -7,7 +7,7 @@ require('dotenv').config()
 
 mongoose.Promise = Promise
 
-mongoose.connect(process.env.MONGODB_ACCOUNT)
+mongoose.connect(process.env.MONGODB_ACCOUNT, { useNewUrlParser: true })
 let db = mongoose.connection
 
 // Check connection

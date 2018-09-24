@@ -18,7 +18,7 @@ router.delete('/:id', async (req, res) => {
 // todo route by id
 router.get('/:id', async (req, res) => {
   const query = { _id: ObjectID(req.params.id) }
-  const todo = await Todo.findById(query)
+  const todo = await Todo.findOne(query)
   if (!todo) {
     return res.sendStatus(404).send('the todo with a given ID is not found')
   }
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 // todo update route
 router.post('/:id', async (req, res) => {
   const query = { _id: ObjectID(req.params.id) }
-  const todo = await Todo.findByIdAndUpdate(query, {
+  const todo = await Todo.findOneAndUpdate(query, {
     $set: {
       title: req.body.title,
       body: req.body.body
