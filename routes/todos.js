@@ -27,11 +27,17 @@ router.get('/:id', async (req, res) => {
 
 // todo update route
 router.post('/:id', async (req, res) => {
+  if (req.body.title === '') {
+    return res.send('Please add a  todo title')
+  }
+
   const query = { _id: ObjectID(req.params.id) }
   const todo = await Todo.findOneAndUpdate(query, {
     $set: {
       title: req.body.title,
-      body: req.body.body
+      body: req.body.body,
+      completed: !!req.body.completed,
+      completed_at: req.body.completed ? new Date().getTime() : null
     }
   },
   { new: true }
@@ -44,6 +50,9 @@ router.post('/:id', async (req, res) => {
 
 // Post todo route
 router.post('/', async (req, res) => {
+  if (req.body.title === '') {
+    return res.send('Please add a  todo title')
+  }
   const todo = new Todo({
     title: req.body.title,
     body: req.body.body

@@ -1,29 +1,75 @@
 <% include ../views/partials/header %>
 <div class="row mt-4">
-  <div class="col-md-7">
-    <form method="post" action="/todos">
-      <div class="form-group">
-        <label> Todo Name</label>
-        <input  class="form-control" type="text" name="title" placeholder="Add Todo">
+  <div class="col-md-6  offset-md-3">
+    <div class="mt-4 text-center"><button class="btn btn-success btn-md addTodoBtn" >+ Add Todo</button></div>
+    <div class="card" id="addTodoForm">
+      <div class="card-header"><strong>Add Todo</strong></div>
+      <div class="card-body">
+        <form method="post" action="/todos">
+          <div class="form-group">
+            <label> Todo Title</label>
+            <input class="form-control" type="text" name="title" placeholder="Add Todo">
+          </div>
+          <div class="form-group">
+            <label> Todo Body</label>
+            <textarea class="form-control" name="body" cols="10" rows="3" placeholder="Add Body"></textarea>
+          </div>
+          <button class="btn btn-info" type="submit">Add</button>
+          <button class="btn btn-danger cancelTodoBtn" type="button">Cancel</button>
+        </form>
       </div>
-      <div class="form-group"> 
-        <label> Todo Body</label>
-        <textarea class="form-control" name="body" cols="10" rows="5" placeholder="Add Body"></textarea>
-      </div>
-      <button class="btn btn-info btn-block" type="submit">Submit</button>
-    </form>
+    </div>
   </div>
-  <div class="col-md-5">
-    <ul class="list-group"> 
-      <% todos.forEach(function(todo) {%>
-      <li class="list-group-item">
-        <%= todo.title %> -
-        <%= todo.body %>
-        <a data-id="<%= todo.id %>" href="#" class="btn btn-info btn-sm delete-todo">Delete</a>
-        <a class="btn btn-danger btn-sm" href="/todos/<%= todo.id %>">Edit</a>
-      </li>
-      <% }) %>
-    </ul>
+  <div class="col-md-6 mt-5">
+    <h4 class="text-center">Todo</h4>
+    <% if(incompleteTodos.length === 0) { %>
+    <div class="card">
+      <div class="card-body text-center">
+        You have no incomplete todos
+      </div>
+    </div>
+    <%}%>
+    <% incompleteTodos.forEach(function(todo) {%>
+    <div class="card mb-2">
+      <div class="card-header">
+        <%= todo.title %>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <%= todo.body %>
+        </p>
+        <hr>
+        <a data-id="<%= todo.id %>" href="#" class="mx-1 float-right btn btn-danger btn-sm delete-todo">Delete</a>
+        <a class="mx-1 float-right btn btn-info btn-sm" href="/todos/<%= todo.id %>">Edit</a>
+        <p class="text-black-50 float-left">Date Added: <%= moment(todo.date_added).format('MMM-DD-YYYY')  %></p>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <div class="col-md-6 mt-5">
+    <h4 class="text-center">Completed</h4>
+    <% if(completedTodos.length === 0) { %>
+    <div class="card">
+      <div class="card-body text-center ">
+        You have no completed todos
+      </div>
+    </div>
+    <%}%>
+    <% completedTodos.forEach(function(todo) {%>
+    <div class="card mb-2">
+      <div class="card-header">
+          <%= todo.title %>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><%= todo.body %></p>
+        <hr>
+        <p class="text-black-50 float-left">Date Completed: <%= moment(todo.completed_at).format('MMM DD YYYY')  %></p>
+        <a data-id="<%= todo.id %>" href="#" class="float-right btn btn-danger btn-sm mx-1 delete-todo">Delete</a>
+        <a class="float-right btn btn-info btn-sm mx-1" href="/todos/<%= todo.id %>">Edit</a>
+      </div>
+    </div>
+    <% }) %>
+
   </div>
 </div>
 
