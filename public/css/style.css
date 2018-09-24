@@ -1,0 +1,7 @@
+#addTodoForm {
+	display: none;
+}
+
+.addTodoBtn {
+	display: inline-block;
+}
